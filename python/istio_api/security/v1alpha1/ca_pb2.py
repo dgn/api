@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='istio.v1.auth',
   syntax='proto3',
   serialized_options=_b('Z\036istio.io/api/security/v1alpha1'),
-  serialized_pb=_b('\n\x1asecurity/v1alpha1/ca.proto\x12\ristio.v1.auth\x1a\x1cgoogle/protobuf/struct.proto\"l\n\x17IstioCertificateRequest\x12\x0b\n\x03\x63sr\x18\x01 \x01(\t\x12\x19\n\x11validity_duration\x18\x03 \x01(\x03\x12)\n\x08metadata\x18\x04 \x01(\x0b\x32\x17.google.protobuf.Struct\".\n\x18IstioCertificateResponse\x12\x12\n\ncert_chain\x18\x01 \x03(\t2\x81\x01\n\x17IstioCertificateService\x12\x66\n\x11\x43reateCertificate\x12&.istio.v1.auth.IstioCertificateRequest\x1a\'.istio.v1.auth.IstioCertificateResponse\"\x00\x42 Z\x1eistio.io/api/security/v1alpha1b\x06proto3')
+  serialized_pb=_b('\n\x1asecurity/v1alpha1/ca.proto\x12\ristio.v1.auth\x1a\x1cgoogle/protobuf/struct.proto\"l\n\x17IstioCertificateRequest\x12\x0b\n\x03\x63sr\x18\x01 \x01(\t\x12\x19\n\x11validity_duration\x18\x03 \x01(\x03\x12)\n\x08metadata\x18\x04 \x01(\x0b\x32\x17.google.protobuf.Struct\"6\n\x0bTrustBundle\x12\x14\n\x0ctrust_domain\x18\x01 \x01(\t\x12\x11\n\troot_cert\x18\x02 \x01(\t\"a\n\x18IstioCertificateResponse\x12\x12\n\ncert_chain\x18\x01 \x03(\t\x12\x31\n\rtrust_bundles\x18\r \x03(\x0b\x32\x1a.istio.v1.auth.TrustBundle2\x81\x01\n\x17IstioCertificateService\x12\x66\n\x11\x43reateCertificate\x12&.istio.v1.auth.IstioCertificateRequest\x1a\'.istio.v1.auth.IstioCertificateResponse\"\x00\x42 Z\x1eistio.io/api/security/v1alpha1b\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,])
 
@@ -73,17 +73,24 @@ _ISTIOCERTIFICATEREQUEST = _descriptor.Descriptor(
 )
 
 
-_ISTIOCERTIFICATERESPONSE = _descriptor.Descriptor(
-  name='IstioCertificateResponse',
-  full_name='istio.v1.auth.IstioCertificateResponse',
+_TRUSTBUNDLE = _descriptor.Descriptor(
+  name='TrustBundle',
+  full_name='istio.v1.auth.TrustBundle',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='cert_chain', full_name='istio.v1.auth.IstioCertificateResponse.cert_chain', index=0,
-      number=1, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
+      name='trust_domain', full_name='istio.v1.auth.TrustBundle.trust_domain', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='root_cert', full_name='istio.v1.auth.TrustBundle.root_cert', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -100,11 +107,51 @@ _ISTIOCERTIFICATERESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=185,
-  serialized_end=231,
+  serialized_end=239,
+)
+
+
+_ISTIOCERTIFICATERESPONSE = _descriptor.Descriptor(
+  name='IstioCertificateResponse',
+  full_name='istio.v1.auth.IstioCertificateResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='cert_chain', full_name='istio.v1.auth.IstioCertificateResponse.cert_chain', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='trust_bundles', full_name='istio.v1.auth.IstioCertificateResponse.trust_bundles', index=1,
+      number=13, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=241,
+  serialized_end=338,
 )
 
 _ISTIOCERTIFICATEREQUEST.fields_by_name['metadata'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_ISTIOCERTIFICATERESPONSE.fields_by_name['trust_bundles'].message_type = _TRUSTBUNDLE
 DESCRIPTOR.message_types_by_name['IstioCertificateRequest'] = _ISTIOCERTIFICATEREQUEST
+DESCRIPTOR.message_types_by_name['TrustBundle'] = _TRUSTBUNDLE
 DESCRIPTOR.message_types_by_name['IstioCertificateResponse'] = _ISTIOCERTIFICATERESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -114,6 +161,13 @@ IstioCertificateRequest = _reflection.GeneratedProtocolMessageType('IstioCertifi
   # @@protoc_insertion_point(class_scope:istio.v1.auth.IstioCertificateRequest)
   })
 _sym_db.RegisterMessage(IstioCertificateRequest)
+
+TrustBundle = _reflection.GeneratedProtocolMessageType('TrustBundle', (_message.Message,), {
+  'DESCRIPTOR' : _TRUSTBUNDLE,
+  '__module__' : 'security.v1alpha1.ca_pb2'
+  # @@protoc_insertion_point(class_scope:istio.v1.auth.TrustBundle)
+  })
+_sym_db.RegisterMessage(TrustBundle)
 
 IstioCertificateResponse = _reflection.GeneratedProtocolMessageType('IstioCertificateResponse', (_message.Message,), {
   'DESCRIPTOR' : _ISTIOCERTIFICATERESPONSE,
@@ -131,8 +185,8 @@ _ISTIOCERTIFICATESERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=234,
-  serialized_end=363,
+  serialized_start=341,
+  serialized_end=470,
   methods=[
   _descriptor.MethodDescriptor(
     name='CreateCertificate',

@@ -26,6 +26,20 @@
           }
         }
       },
+      "istio.v1.auth.TrustBundle": {
+        "type": "object",
+        "properties": {
+          "trustDomain": {
+            "type": "string",
+            "format": "string"
+          },
+          "rootCert": {
+            "description": "PEM-encoded root cert",
+            "type": "string",
+            "format": "string"
+          }
+        }
+      },
       "istio.v1.auth.IstioCertificateResponse": {
         "description": "Certificate response message.",
         "type": "object",
@@ -36,6 +50,13 @@
             "items": {
               "type": "string",
               "format": "string"
+            }
+          },
+          "trustBundles": {
+            "description": "list of other trust bundles. optional",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/istio.v1.auth.TrustBundle"
             }
           }
         }

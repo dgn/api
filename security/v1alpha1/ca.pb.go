@@ -105,21 +105,79 @@ func (m *IstioCertificateRequest) GetMetadata() *types.Struct {
 	return nil
 }
 
+type TrustBundle struct {
+	TrustDomain string `protobuf:"bytes,1,opt,name=trust_domain,json=trustDomain,proto3" json:"trust_domain,omitempty"`
+	// PEM-encoded root cert
+	RootCert             string   `protobuf:"bytes,2,opt,name=root_cert,json=rootCert,proto3" json:"root_cert,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *TrustBundle) Reset()         { *m = TrustBundle{} }
+func (m *TrustBundle) String() string { return proto.CompactTextString(m) }
+func (*TrustBundle) ProtoMessage()    {}
+func (*TrustBundle) Descriptor() ([]byte, []int) {
+	return fileDescriptor_af28ba83f79edf69, []int{1}
+}
+func (m *TrustBundle) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TrustBundle) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TrustBundle.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TrustBundle) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TrustBundle.Merge(m, src)
+}
+func (m *TrustBundle) XXX_Size() int {
+	return m.Size()
+}
+func (m *TrustBundle) XXX_DiscardUnknown() {
+	xxx_messageInfo_TrustBundle.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TrustBundle proto.InternalMessageInfo
+
+func (m *TrustBundle) GetTrustDomain() string {
+	if m != nil {
+		return m.TrustDomain
+	}
+	return ""
+}
+
+func (m *TrustBundle) GetRootCert() string {
+	if m != nil {
+		return m.RootCert
+	}
+	return ""
+}
+
 // Certificate response message.
 type IstioCertificateResponse struct {
 	// PEM-encoded certificate chain.
 	// The leaf cert is the first element, and the root cert is the last element.
-	CertChain            []string `protobuf:"bytes,1,rep,name=cert_chain,json=certChain,proto3" json:"cert_chain,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	CertChain []string `protobuf:"bytes,1,rep,name=cert_chain,json=certChain,proto3" json:"cert_chain,omitempty"`
+	// list of other trust bundles. optional
+	TrustBundles         []*TrustBundle `protobuf:"bytes,13,rep,name=trust_bundles,json=trustBundles,proto3" json:"trust_bundles,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
 func (m *IstioCertificateResponse) Reset()         { *m = IstioCertificateResponse{} }
 func (m *IstioCertificateResponse) String() string { return proto.CompactTextString(m) }
 func (*IstioCertificateResponse) ProtoMessage()    {}
 func (*IstioCertificateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_af28ba83f79edf69, []int{1}
+	return fileDescriptor_af28ba83f79edf69, []int{2}
 }
 func (m *IstioCertificateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -155,34 +213,47 @@ func (m *IstioCertificateResponse) GetCertChain() []string {
 	return nil
 }
 
+func (m *IstioCertificateResponse) GetTrustBundles() []*TrustBundle {
+	if m != nil {
+		return m.TrustBundles
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*IstioCertificateRequest)(nil), "istio.v1.auth.IstioCertificateRequest")
+	proto.RegisterType((*TrustBundle)(nil), "istio.v1.auth.TrustBundle")
 	proto.RegisterType((*IstioCertificateResponse)(nil), "istio.v1.auth.IstioCertificateResponse")
 }
 
 func init() { proto.RegisterFile("security/v1alpha1/ca.proto", fileDescriptor_af28ba83f79edf69) }
 
 var fileDescriptor_af28ba83f79edf69 = []byte{
-	// 301 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x91, 0xc1, 0x4a, 0xc3, 0x40,
-	0x14, 0x45, 0x1d, 0x22, 0x62, 0x47, 0x84, 0x76, 0x36, 0x0d, 0x45, 0x43, 0xe8, 0x42, 0x03, 0xca,
-	0x84, 0xb6, 0x2b, 0xb7, 0xd6, 0x8d, 0xdb, 0x74, 0xe7, 0xa6, 0xbc, 0x4e, 0x5f, 0xdb, 0x07, 0xb5,
-	0x13, 0x67, 0x5e, 0x02, 0x5d, 0xfa, 0x01, 0xfe, 0x97, 0x4b, 0x3f, 0x41, 0xfa, 0x25, 0x92, 0xc6,
-	0x8a, 0x52, 0xc5, 0xdd, 0x70, 0xef, 0x19, 0x38, 0x73, 0x47, 0x76, 0x3c, 0x9a, 0xc2, 0x11, 0xaf,
-	0xd3, 0xb2, 0x07, 0xcb, 0x7c, 0x01, 0xbd, 0xd4, 0x80, 0xce, 0x9d, 0x65, 0xab, 0x4e, 0xc9, 0x33,
-	0x59, 0x5d, 0xf6, 0x34, 0x14, 0xbc, 0xe8, 0x9c, 0xcd, 0xad, 0x9d, 0x2f, 0x31, 0xdd, 0x96, 0x93,
-	0x62, 0x96, 0x7a, 0x76, 0x85, 0xe1, 0x1a, 0xee, 0xbe, 0x08, 0xd9, 0xbe, 0xaf, 0xf8, 0x21, 0x3a,
-	0xa6, 0x19, 0x19, 0x60, 0xcc, 0xf0, 0xa9, 0x40, 0xcf, 0xaa, 0x29, 0x03, 0xe3, 0x5d, 0x28, 0x62,
-	0x91, 0x34, 0xb2, 0xea, 0xa8, 0xae, 0x64, 0xab, 0x84, 0x25, 0x4d, 0x89, 0xd7, 0xe3, 0x69, 0xe1,
-	0x80, 0xc9, 0xae, 0xc2, 0x20, 0x16, 0x49, 0x90, 0x35, 0x77, 0xc5, 0xdd, 0x67, 0xae, 0x06, 0xf2,
-	0xf8, 0x11, 0x19, 0xa6, 0xc0, 0x10, 0x1e, 0xc6, 0x22, 0x39, 0xe9, 0xb7, 0x75, 0xed, 0xa2, 0x77,
-	0x2e, 0x7a, 0xb4, 0x75, 0xc9, 0xbe, 0xc0, 0xee, 0x8d, 0x0c, 0xf7, 0x75, 0x7c, 0x6e, 0x57, 0x1e,
-	0xd5, 0xb9, 0x94, 0x06, 0x1d, 0x8f, 0xcd, 0x02, 0x68, 0x15, 0x8a, 0x38, 0x48, 0x1a, 0x59, 0xa3,
-	0x4a, 0x86, 0x55, 0xd0, 0x7f, 0xfe, 0xe5, 0x29, 0x23, 0x74, 0x25, 0x19, 0x54, 0x33, 0xd9, 0x1a,
-	0x3a, 0x04, 0xc6, 0x6f, 0x9d, 0xba, 0xd0, 0x3f, 0x96, 0xd2, 0x7f, 0xec, 0xd0, 0xb9, 0xfc, 0x97,
-	0xab, 0x05, 0xbb, 0x07, 0xb7, 0xd7, 0xaf, 0x9b, 0x48, 0xbc, 0x6d, 0x22, 0xf1, 0xbe, 0x89, 0xc4,
-	0x43, 0x54, 0xdf, 0x23, 0x9b, 0x42, 0x4e, 0xe9, 0xde, 0x97, 0x4d, 0x8e, 0xb6, 0x3b, 0x0c, 0x3e,
-	0x02, 0x00, 0x00, 0xff, 0xff, 0x5a, 0xf0, 0x77, 0xed, 0xce, 0x01, 0x00, 0x00,
+	// 376 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x92, 0x41, 0x8e, 0xd3, 0x30,
+	0x14, 0x86, 0x31, 0x41, 0x68, 0xe2, 0x50, 0x69, 0xc6, 0x9b, 0x89, 0x02, 0x44, 0x21, 0x0b, 0x88,
+	0x04, 0x72, 0xd4, 0xce, 0x01, 0x90, 0xa6, 0xdd, 0xb0, 0x60, 0x93, 0xb2, 0x62, 0x13, 0xb9, 0x8e,
+	0xdb, 0x5a, 0x4a, 0xe3, 0x60, 0x3f, 0x47, 0x2a, 0x3b, 0x0e, 0xc0, 0xbd, 0x58, 0x72, 0x04, 0xd4,
+	0x93, 0x20, 0xc7, 0x2d, 0x2a, 0x14, 0xc4, 0x2e, 0xfe, 0xff, 0xdf, 0x2f, 0xdf, 0x7b, 0xcf, 0x38,
+	0x31, 0x82, 0x5b, 0x2d, 0x61, 0x5f, 0x0e, 0x53, 0xd6, 0xf6, 0x5b, 0x36, 0x2d, 0x39, 0xa3, 0xbd,
+	0x56, 0xa0, 0xc8, 0x44, 0x1a, 0x90, 0x8a, 0x0e, 0x53, 0xca, 0x2c, 0x6c, 0x93, 0x67, 0x1b, 0xa5,
+	0x36, 0xad, 0x28, 0x47, 0x73, 0x65, 0xd7, 0xa5, 0x01, 0x6d, 0x39, 0xf8, 0x70, 0xfe, 0x15, 0xe1,
+	0xdb, 0x77, 0x2e, 0x3f, 0x17, 0x1a, 0xe4, 0x5a, 0x72, 0x06, 0xa2, 0x12, 0x9f, 0xac, 0x30, 0x40,
+	0xae, 0x71, 0xc0, 0x8d, 0x8e, 0x51, 0x86, 0x8a, 0xb0, 0x72, 0x9f, 0xe4, 0x35, 0xbe, 0x19, 0x58,
+	0x2b, 0x1b, 0x09, 0xfb, 0xba, 0xb1, 0x9a, 0x81, 0x54, 0x5d, 0x1c, 0x64, 0xa8, 0x08, 0xaa, 0xeb,
+	0x93, 0xb1, 0x38, 0xea, 0xe4, 0x0e, 0x5f, 0xed, 0x04, 0xb0, 0x86, 0x01, 0x8b, 0x1f, 0x65, 0xa8,
+	0x88, 0x66, 0xb7, 0xd4, 0xb3, 0xd0, 0x13, 0x0b, 0x5d, 0x8e, 0x2c, 0xd5, 0xaf, 0x60, 0xfe, 0x1e,
+	0x47, 0x1f, 0xb4, 0x35, 0x70, 0x6f, 0xbb, 0xa6, 0x15, 0xe4, 0x05, 0x7e, 0x02, 0xee, 0x58, 0x37,
+	0x6a, 0xc7, 0x64, 0x77, 0x64, 0x89, 0x46, 0x6d, 0x31, 0x4a, 0xe4, 0x29, 0x0e, 0xb5, 0x52, 0x50,
+	0x73, 0xa1, 0x21, 0x7e, 0x38, 0xfa, 0x57, 0x4e, 0x70, 0x0d, 0xe5, 0x9f, 0x71, 0x7c, 0xd9, 0x9d,
+	0xe9, 0x55, 0x67, 0x04, 0x79, 0x8e, 0xb1, 0xbb, 0x53, 0xf3, 0xad, 0xaf, 0x1c, 0x14, 0x61, 0x15,
+	0x3a, 0x65, 0xee, 0x04, 0xf2, 0x16, 0x4f, 0xfc, 0xaf, 0x57, 0x23, 0x8a, 0x89, 0x27, 0x59, 0x50,
+	0x44, 0xb3, 0x84, 0xfe, 0x36, 0x5e, 0x7a, 0x46, 0x5b, 0x79, 0x56, 0x7f, 0x30, 0xb3, 0x2f, 0x7f,
+	0x19, 0xed, 0x52, 0xe8, 0x41, 0x72, 0x41, 0xd6, 0xf8, 0x66, 0xae, 0x05, 0x03, 0x71, 0xe6, 0x91,
+	0x97, 0x7f, 0x94, 0xfe, 0xc7, 0x5e, 0x92, 0x57, 0xff, 0xcd, 0xf9, 0x0e, 0xf3, 0x07, 0xf7, 0x6f,
+	0xbe, 0x1d, 0x52, 0xf4, 0xfd, 0x90, 0xa2, 0x1f, 0x87, 0x14, 0x7d, 0x4c, 0xfd, 0x3d, 0xa9, 0x4a,
+	0xd6, 0xcb, 0xf2, 0xe2, 0x09, 0xad, 0x1e, 0x8f, 0x7b, 0xb9, 0xfb, 0x19, 0x00, 0x00, 0xff, 0xff,
+	0x9f, 0x1c, 0xf1, 0x74, 0x5e, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -318,6 +389,47 @@ func (m *IstioCertificateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
+func (m *TrustBundle) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TrustBundle) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TrustBundle) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.RootCert) > 0 {
+		i -= len(m.RootCert)
+		copy(dAtA[i:], m.RootCert)
+		i = encodeVarintCa(dAtA, i, uint64(len(m.RootCert)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.TrustDomain) > 0 {
+		i -= len(m.TrustDomain)
+		copy(dAtA[i:], m.TrustDomain)
+		i = encodeVarintCa(dAtA, i, uint64(len(m.TrustDomain)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *IstioCertificateResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -341,6 +453,20 @@ func (m *IstioCertificateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.TrustBundles) > 0 {
+		for iNdEx := len(m.TrustBundles) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.TrustBundles[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintCa(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x6a
+		}
 	}
 	if len(m.CertChain) > 0 {
 		for iNdEx := len(m.CertChain) - 1; iNdEx >= 0; iNdEx-- {
@@ -388,6 +514,26 @@ func (m *IstioCertificateRequest) Size() (n int) {
 	return n
 }
 
+func (m *TrustBundle) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.TrustDomain)
+	if l > 0 {
+		n += 1 + l + sovCa(uint64(l))
+	}
+	l = len(m.RootCert)
+	if l > 0 {
+		n += 1 + l + sovCa(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *IstioCertificateResponse) Size() (n int) {
 	if m == nil {
 		return 0
@@ -397,6 +543,12 @@ func (m *IstioCertificateResponse) Size() (n int) {
 	if len(m.CertChain) > 0 {
 		for _, s := range m.CertChain {
 			l = len(s)
+			n += 1 + l + sovCa(uint64(l))
+		}
+	}
+	if len(m.TrustBundles) > 0 {
+		for _, e := range m.TrustBundles {
+			l = e.Size()
 			n += 1 + l + sovCa(uint64(l))
 		}
 	}
@@ -553,6 +705,124 @@ func (m *IstioCertificateRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *TrustBundle) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowCa
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TrustBundle: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TrustBundle: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TrustDomain", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCa
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCa
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCa
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TrustDomain = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RootCert", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCa
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCa
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCa
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RootCert = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipCa(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthCa
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthCa
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *IstioCertificateResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -613,6 +883,40 @@ func (m *IstioCertificateResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.CertChain = append(m.CertChain, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 13:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TrustBundles", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCa
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCa
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCa
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TrustBundles = append(m.TrustBundles, &TrustBundle{})
+			if err := m.TrustBundles[len(m.TrustBundles)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

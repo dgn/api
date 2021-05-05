@@ -30,6 +30,17 @@ func (this *IstioCertificateRequest) UnmarshalJSON(b []byte) error {
 	return CaUnmarshaler.Unmarshal(bytes.NewReader(b), this)
 }
 
+// MarshalJSON is a custom marshaler for TrustBundle
+func (this *TrustBundle) MarshalJSON() ([]byte, error) {
+	str, err := CaMarshaler.MarshalToString(this)
+	return []byte(str), err
+}
+
+// UnmarshalJSON is a custom unmarshaler for TrustBundle
+func (this *TrustBundle) UnmarshalJSON(b []byte) error {
+	return CaUnmarshaler.Unmarshal(bytes.NewReader(b), this)
+}
+
 // MarshalJSON is a custom marshaler for IstioCertificateResponse
 func (this *IstioCertificateResponse) MarshalJSON() ([]byte, error) {
 	str, err := CaMarshaler.MarshalToString(this)

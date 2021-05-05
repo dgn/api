@@ -2,7 +2,7 @@
 title: istio.v1.auth
 layout: protoc-gen-docs
 generator: protoc-gen-docs
-number_of_entries: 3
+number_of_entries: 4
 ---
 <h2 id="Services">Services</h2>
 <h3 id="IstioCertificateService">IstioCertificateService</h3>
@@ -61,6 +61,41 @@ No
 </tbody>
 </table>
 </section>
+<h3 id="TrustBundle">TrustBundle</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TrustBundle-trust_domain">
+<td><code>trustDomain</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TrustBundle-root_cert">
+<td><code>rootCert</code></td>
+<td><code>string</code></td>
+<td>
+<p>PEM-encoded root cert</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
 <h3 id="IstioCertificateResponse">IstioCertificateResponse</h3>
 <section>
 <p>Certificate response message.</p>
@@ -81,6 +116,17 @@ No
 <td>
 <p>PEM-encoded certificate chain.
 The leaf cert is the first element, and the root cert is the last element.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioCertificateResponse-trust_bundles">
+<td><code>trustBundles</code></td>
+<td><code><a href="#TrustBundle">TrustBundle[]</a></code></td>
+<td>
+<p>list of other trust bundles. optional</p>
 
 </td>
 <td>
